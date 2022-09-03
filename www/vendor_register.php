@@ -8,7 +8,7 @@
 
     if($_SERVER["REQUEST_METHOD"] == "POST") {
         // Check local uniqueness
-        $file2=fopen("C:/fullstack/business_name.db","r");
+        $file2=fopen("../business_name.db","r");
         $find_business_name=false;
         while(!feof($file2))
         {
@@ -21,7 +21,7 @@
         }
         fclose($file2);
 
-        $file3=fopen("C:/fullstack/business_address.db","r");
+        $file3=fopen("../business_address.db","r");
         $find_business_address=false;
         while(!feof($file3))
         {
