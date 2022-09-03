@@ -1,35 +1,64 @@
-<?php 
-require_once('same_register_2.php')
+<?php
+    require_once('same_register_2.php');
 ?>
 <?php
-    $business_namephpErr = $business_addressphpErr = "";
     $business_namephp = $business_addressphp = "";
+    $business_namephpErr = $business_addressphpErr = "";
+    $success_message = "";
 
     if($_SERVER["REQUEST_METHOD"] == "POST") {
-        // Form validation
-        if ($finduser == true) {
-            echo "";
-        }  else { 
-        $myfile2 = fopen("C:/fullstack/account.db","r");
-        $finduser2 = false;
-        while (!feof($myfile2))
+        // Check local uniqueness
+        $file2=fopen("C:/fullstack/business_name.db","r");
+        $find_business_name=false;
+        while(!feof($file2))
         {
-            $line2 = fgets($myfile2);
-            $array2 = explode (",", $line2);
-            if (trim($array2[3]) == $_POST["business_name"]) {
-                $finduser2 = true;
-                break;
+            $line2 = fgets($file2);
+            $array2 = explode(",",$line2);
+            if(trim($array2[0]) == $_POST["business_name"])
+            {
+                $find_business_name=true;
             }
         }
-        fclose($myfile2);
+        fclose($file2);
 
-        if ($finduser2 == true) {
-            echo "Already existed business name. Please register again"."\n";
-        } else {
+        $file3=fopen("C:/fullstack/business_address.db","r");
+        $find_business_address=false;
+        while(!feof($file3))
+        {
+            $line3 = fgets($file3);
+            $array3 = explode(",",$line3);
+            if(trim($array3[0]) == $_POST["business_address"])
+            {
+                $find_business_address=true;
+            }
+        }
+        fclose($file3);
+
+        if ($find_business_name == true) {
+            echo "Already existed business name. Please register again.";
+            echo "<br>";
+        } 
+
+        if ($find_business_address == true) {
+            echo "Already existed business address. Please register again.";
+            echo "<br>";
+        } 
+        
+        else {
+            
+            // Display user's input
+            echo "<h1> Registration Information </h1>";
+            echo "Username:".$usernamephp;
+            echo "<br>";
+            echo "Password:".$passwordphp;
+            echo "<br>";
+            echo "Profile picture name:". basename($_FILES["image"]["name"]);
+            echo "<br>";
+
+            // Form validation
             if (empty($_POST["business_name"])) {
                 $business_namephpErr = "Business name must not be empty";
-            }
-            else{
+            } else{
                 $business_namephp = test_input($_POST["business_name"]);
                 if (strlen($_POST["business_name"]) < 5) {
                     $business_namephpErr = "Business name must contain at least 5 characters";
@@ -38,41 +67,35 @@ require_once('same_register_2.php')
                     echo "Business name:".$business_namephp;
                     echo "<br>";
                 }
-            }    
-            $myfile3 = fopen("C:/fullstack/account.db","r");
-            $finduser3 = false;
-            while (!feof($myfile3))
-            {
-            $line3 = fgets($myfile3);
-            $array3 = explode (",", $line3);
-            if (trim($array3[4]) == $_POST["business_address"]) {
-                $finduser3 = true;
-                break;
             }
+
+            if (empty($_POST["business_address"])) {
+                $business_addressphpErr = "Business address must not be empty";
+            } else{
+                $business_addressphp = test_input($_POST["business_address"]);
+                if (strlen($_POST["business_address"]) < 5) {
+                    $business_namephpErr = "Business address must contain at least 5 characters";
+                } 
+                else {
+                    echo "Business address:".$business_addressphp;
+                    echo "<br>";
+                }
             }
-            fclose($myfile3);
 
-            if ($finduser3 == true) {
-                echo "Already existed business address. Please register again"."\n";
-            } else {
-                if (empty($_POST["business_address"])) {
-                    $business_addressphpErr = "Business address must not be empty";
-                }
-                else{
-                    $business_addressphp = test_input($_POST["business_address"]);
-                    if (strlen($_POST["business_address"]) < 5) {
-                    $business_addressphpErr = "Business name must contain at least 5 characters";
-                    }
-                }
-
-                // Display user's input
-                echo "Business address:".$business_addressphp;
-
-                // File handling
+            // File handling
+            if ($finduser == false && $find_business_address == false && $find_business_name == false) {
                 $file = fopen("C:/fullstack/account.db", "a") or die("Unable to open file!");
-                fwrite($file, "\n". $usernamephp.",".$passwordphphash.",".$target_file.",".$business_namephp.",".$business_addressphp);
+                fputs($file,($usernamephp.";".$passwordphphash.";".basename($_FILES['image']['name']).";".$business_namephp.";".$business_addressphp.";"."no".";"."no".";"."no".";"."vendor"."\r\n"));
                 fclose($file);
-                }
+                    
+                $file2 = fopen("C:/fullstack/business_name.db", "a+");
+                fputs($file2,($business_namephp."\r\n"));
+                fclose($file2);
+
+                $file3 = fopen("C:/fullstack/business_address.db", "a+");
+                fputs($file3,($business_addressphp."\r\n"));
+                fclose($file3);
+                $success_message ='Registered successfully!';
             }
         }
     }
@@ -115,9 +138,10 @@ require_once('same_register_2.php')
         </div>
            
         <div class="form_row">
-            <input type="submit" name= "act" class="btn" value= "Register now">
+            <input type="submit" name= "act" class="btn" value= "Register now"> <br>
+            <span class="message-success"><?php echo $success_message ?></span> <br>
         </div>
-
+        <input type="hidden" name="vendor">
         <p> Already have an account? <a href= "login.php"> Login now </a> </p>
     </form>
 </div>
