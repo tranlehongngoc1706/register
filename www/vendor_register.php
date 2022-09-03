@@ -84,15 +84,15 @@
 
             // File handling
             if ($finduser == false && $find_business_address == false && $find_business_name == false) {
-                $file = fopen("C:/fullstack/account.db", "a") or die("Unable to open file!");
+                $file = fopen("../account.db", "a") or die("Unable to open file!");
                 fputs($file,($usernamephp.";".$passwordphphash.";".basename($_FILES['image']['name']).";".$business_namephp.";".$business_addressphp.";"."no".";"."no".";"."no".";"."vendor"."\r\n"));
                 fclose($file);
                     
-                $file2 = fopen("C:/fullstack/business_name.db", "a+");
+                $file2 = fopen("../business_name.db", "a+");
                 fputs($file2,($business_namephp."\r\n"));
                 fclose($file2);
 
-                $file3 = fopen("C:/fullstack/business_address.db", "a+");
+                $file3 = fopen("../business_address.db", "a+");
                 fputs($file3,($business_addressphp."\r\n"));
                 fclose($file3);
                 $success_message ='Registered successfully!';
