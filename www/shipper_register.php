@@ -1,22 +1,34 @@
-<?php 
-require_once('same_register_2.php')
+<?php
+    require_once('same_register_2.php');
 ?>
 <?php
     $distribution_hubphp = "";
+    $success_message = "";
+
     if($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($finduser == true) {
             echo "";
         }  else {
-        $distribution_hubphp = $_POST["distribution_hub"];
         // Display user's input
+        echo "<h1> Registration Information </h1>";
+        echo "Username:".$usernamephp;
+        echo "<br>";
+        echo "Password:".$passwordphp;
+        echo "<br>";
+        echo "Profile picture name:".$_FILES["image"]["name"];
+        echo "<br>";
+        $distribution_hubphp = $_POST["distribution_hub"];
         echo "Distribution hub:".$distribution_hubphp;
 
         // File handling
-        $file = fopen("C:/fullstack/account.db", "a") or die("Unable to open file!");
-        fwrite($file, $usernamephp.",".$passwordphphash.",".$target_file.",".$distribution_hubphp."\n");
-        fclose($file);
+        if ($finduser == false) {
+            $file = fopen("C:/fullstack/account.db", "a") or die("Unable to open file!");
+            fputs($file,($usernamephp.";".$passwordphphash.";".$_FILES["image"]["name"].";"."no".";"."no".";"."no".";"."no".";".$distribution_hubphp.";"."shipper"."\r\n"));
+            fclose($file);
+            $success_message ='Registered successfully!';
         }
     }
+}
 ?>
 
 <!DOCTYPE html>
@@ -49,9 +61,10 @@ require_once('same_register_2.php')
         </div>
            
         <div class="form_row">
-            <input type="submit" name= "act" class="btn" value= "Register now">
+            <input type="submit" name= "act" class="btn" value= "Register now"> <br>
+            <span class="message-success"><?php echo $success_message ?></span> <br>
         </div>
-
+        <input type="hidden" name="shipper">
         <p> Already have an account? <a href= "login.php"> Login now </a> </p>
     </form>
 </div>
