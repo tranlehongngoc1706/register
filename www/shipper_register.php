@@ -22,7 +22,7 @@
 
         // File handling
         if ($finduser == false) {
-            $file = fopen("C:/fullstack/account.db", "a") or die("Unable to open file!");
+            $file = fopen("../account.db", "a") or die("Unable to open file!");
             fputs($file,($usernamephp.";".$passwordphphash.";".$_FILES["image"]["name"].";"."no".";"."no".";"."no".";"."no".";".$distribution_hubphp.";"."shipper"."\r\n"));
             fclose($file);
             $success_message ='Registered successfully!';
