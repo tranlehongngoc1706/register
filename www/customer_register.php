@@ -8,7 +8,7 @@
 
     if($_SERVER["REQUEST_METHOD"] == "POST") {
         // Check local uniqueness
-        $file2=fopen("C:/fullstack/name.db","r");
+        $file2=fopen("../name.db","r");
         $find_name=false;
         while(!feof($file2))
         {
@@ -21,7 +21,7 @@
         }
         fclose($file2);
         
-        $file3=fopen("C:/fullstack/address.db","r");
+        $file3=fopen("../address.db","r");
         $find_address=false;
         while(!feof($file3))
         {
@@ -82,7 +82,7 @@
                 }
                     if ($finduser == false && $find_address == false && $find_name == false) {
                     // File handling
-                    $file = fopen("C:/fullstack/account.db", "a") or die("Unable to open file!");
+                    $file = fopen("../account.db", "a") or die("Unable to open file!");
                     fputs($file,($usernamephp.";".$passwordphphash.";".$_FILES['image']['name'].";"."no".";"."no".";".$your_namephp.";".$your_addressphp.";"."no".";"."customer"."\r\n"));
                     fclose($file);
                         
