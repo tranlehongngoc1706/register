@@ -8,6 +8,7 @@
     list-style: none;
     font-family: 'Playfair Display', serif;
 }
+
 html{
     font-size: 62.5%;
     overflow-x: hidden;
@@ -15,7 +16,6 @@ html{
 
 .form-container{
     min-height: 100vh;
-    background-color: beige;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -51,7 +51,8 @@ html{
     margin: 1rem 0;
     padding: 1rem 3rem;
     cursor: pointer;
-    background-color: lightcoral;
+    background-color:rgb(11, 11, 66);
+    color: white;
     font-size: 1.8rem;
     border-radius: 0.5rem;
 }
