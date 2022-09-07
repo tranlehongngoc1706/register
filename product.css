@@ -1,0 +1,10 @@
+.all_products {
+  min-height: 60vh ;
+  }
+
+#filter {
+    padding:auto;
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+}
