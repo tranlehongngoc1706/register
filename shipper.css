@@ -1,0 +1,41 @@
+body {
+    font-size: 1.2rem;
+    height:100vh;
+    display: grid;
+    justify-content: center;
+    align-content: center;
+}
+
+table {
+    border-collapse: collapse;
+    box-shadow: 0 6px whitesmoke;
+    background-color: white;
+    text-align: left;
+}
+
+thead {
+    box-shadow: 0 6px 11px whitesmoke;   
+}
+
+th {
+    padding: 1rem 2rem;
+    text-transform: uppercase;
+    font-size: 1.5rem;
+    font-weight: 900;
+    text-align: center;
+}
+
+td{
+    padding: 1rem 2rem;
+}
+
+.status {
+    background-color: rgb(11,11,66);
+    color: white;
+    font-size: 1.2rem;
+}
+
+button {
+    background-color: lightcoral;
+    font-size: 1.2rem;
+}
